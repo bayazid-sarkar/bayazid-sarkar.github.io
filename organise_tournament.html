@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organise Tournament - VenueVista</title>
+    <link href="../src/css/styles.css" rel="stylesheet" />
+</head>
+<body class="bg-gray-100">
+    <div id="navbar"></div>
+    <div class="text-center py-12">
+        <h1 class="text-4xl font-bold">Organise Your Tournament</h1>
+        <form id="tournament-form" class="mt-8">
+            <input type="text" id="tournament-name" placeholder="Tournament Name" class="p-2 border rounded w-1/2" required />
+            <input type="date" id="tournament-date" class="p-2 border rounded w-1/2 mt-4" required />
+            <button type="submit" class="mt-4 p-2 bg-green-500 text-white rounded">Organise</button>
+        </form>
+        <div id="tournament-message" class="mt-4"></div>
+    </div>
+    <div id="footer"></div>
+
+    <script>
+        document.getElementById('tournament-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const tournamentName = document.getElementById('tournament-name').value;
+            const tournamentDate = document.getElementById('tournament-date').value;
+            document.getElementById('tournament-message').innerText = `Tournament "${tournamentName}" on ${tournamentDate} organized!`;
+        });
+    </script>
+</body>
+</html>

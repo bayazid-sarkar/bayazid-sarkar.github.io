@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Profile</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing:inherit;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      width: 100%;
+      background: #222D32;
+      display: grid;
+      justify-content: center;
+      align-items: center;
+      color: whitesmoke;
+      text-align: center;
+    }
+
+    #profile-container {
+      padding: 20px;
+      border: 1px solid #006653;
+      border-radius: 8px;
+      background-color: #48bb78;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
+    }
+
+    img {
+      border-radius: 50%;
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      margin-bottom: 10px;
+    }
+
+    #signoutbtn {
+      height: 40px;
+      padding: 0 15px;
+      border: none;
+      background: #009579;
+      color: #fff;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    #signoutbtn:hover {
+      background: #ff5722;
+    }
+    #booking-history {
+      margin-top: 20px;
+      background:#48bb78;
+      padding: 20px;
+      border-radius: 10px;
+      text-size-adjust: 14px;
+    }
+    #booking-history h1 {
+      color: whitesmoke;
+      margin-bottom: 10px;
+    }
+    #booking-history .upcoming {
+      margin-bottom: 0px;
+      background-color: #009579;
+      border-radius: 8px;
+      padding: 10px;
+    }
+
+    #booking-history .previous {
+      margin-top: 2px;
+      background-color: #009579;
+      border-radius: 8px;
+      padding: 10px;
+    }
+
+  </style>
+</head>
+<body>
+  <div id="profile-container">
+    <h1>User Profile</h1>
+    <!-- Display user photo -->
+    <img id="user-photo" src="" alt="User Photo">
+    <p id="user-name">Name: </p>
+
+    <p id="user-email">Email: </p>
+    <p id="user-type">User Type: </p>
+    <button id="signoutbtn">Sign Out</button>
+    <a href="/index.html"><button id="signoutbtn">Home</button></a>
+  </div>
+  <div id="booking-history">
+    <h1>Booking History</h1>
+    <div class="upcoming">
+      <h2>Upcoming Bookings</h2>
+      <div id="upcoming-bookings"></div>
+    </div>
+    <div class="previous">
+      <h2>Previous Bookings</h2>
+      <div id="previous-bookings"></div>
+    </div>
+  </div>
+
+  <!-- Import Firebase dependencies -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
+
+  <script>
+    // Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyDTmdttPtfhIdDB5Hqdl7GRgAdk6I6dRAI",
+  authDomain: "venuevista-12.firebaseapp.com",
+  databaseURL: "https://venuevista-12-default-rtdb.firebaseio.com",
+  projectId: "venuevista-12",
+  storageBucket: "venuevista-12.appspot.com",
+  messagingSenderId: "462965670870",
+  appId: "1:462965670870:web:d83876a8fd6b98fd76da77",
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
+const storage = firebase.storage();
+
+auth.onAuthStateChanged(async (user) => {
+  if (user) {
+    try {
+      document.getElementById('user-email').innerText = `Email: ${user.email}`;
+      document.getElementById('user-name').innerText = `Name: Loading...`;
+      document.getElementById('user-type').innerText = `User Type: Loading...`;
+
+      const userDoc = await db.collection('users').doc(user.uid).get();
+      if (userDoc.exists) {
+        const userData = userDoc.data();
+
+        document.getElementById('user-name').innerText = `Name: ${userData.name}`;
+        document.getElementById('user-type').innerText = `User Type: ${userData.usertype}`;
+
+        if (userData.photourl) {
+          const photoRef = storage.ref(userData.photourl);
+          const photoURL = await photoRef.getDownloadURL();
+          document.getElementById('user-photo').src = photoURL;
+        } else {
+          document.getElementById('user-photo').src = "https://via.placeholder.com/100";
+        }
+      } else {
+        document.getElementById('user-name').innerText = 'Name: Not Set';
+        document.getElementById('user-type').innerText = 'User Type: Not Set';
+        document.getElementById('user-photo').src = "https://via.placeholder.com/100";
+      }
+    } catch (error) {
+      console.error("Error fetching user data: ", error);
+    }
+  } else {
+    window.location.href = 'index.html';
+  }
+});
+
+document.getElementById('signoutbtn').addEventListener('click', async () => {
+  try {
+    await auth.signOut();
+    window.location.href = 'index.html';
+  } catch (error) {
+    alert("Failed to sign out: " + error.message);
+  }
+});
+
+  </script>
+</body>
+</html>

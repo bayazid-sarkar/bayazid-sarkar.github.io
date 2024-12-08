@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Venue</title>
+    <link rel="stylesheet" href="styles.css">
+    <script type="module" src="navbar.js" async></script>
+    <script type="module" src="booking.js" async></script>
+    <script src="linknavbar.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="booking.css">
+</head>
+<body>
+    <div id="navbar"></div>
+
+    <h1>Booking Information</h1>
+    <div id="venueDetails">
+        <h2 id="venueName"></h2>
+        <img id="venueImage" src="" alt="Venue Image">
+        <p id="venueLocation"></p>
+        <p id="venueRate"></p>
+        <p id="venueRatings"></p>
+    </div>
+
+    <!-- Time Slot Selection -->
+    <div id="slotSelection">
+        <h3>Select Time Slots</h3>
+        <div id="slotContainer" class="slot-container"></div>
+    </div>
+
+    <!-- Provided Merchandise -->
+    <div class="merchandise-section my-4">
+        <h3 class="text-lg font-semibold mb-2">Provided Merchandise</h3>
+        <div id="providedMerchandise" class="grid grid-cols-3 gap-4"></div>
+    </div>
+
+    <!-- Order Summary -->
+    <div id="orderSummary">
+        <h3>Order Summary</h3>
+        <p id="selectedSlotsText"></p>
+        <p id="totalAmount"></p>
+    </div>
+
+    <!-- Continue to Payment -->
+    <div class="payment-section">
+        <button id="continueButton" disabled>Continue to Payment</button>
+    </div>
+
+    <div id="footer"></div>
+
+    <script src="booking.js"></script>
+</body>
+</html>

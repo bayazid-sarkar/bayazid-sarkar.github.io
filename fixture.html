@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Football Fixture - VenueVista</title>
+    <link href="../src/css/styles.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/VenueVista/src/css/styles.css">
+
+    <script src="../src/js/fixture.js" defer></script>
+</head>
+<body class="bg-gray-100">
+    <div id="navbar"></div>
+
+    <div class="container mx-auto text-center py-12">
+        <h1 class="text-green-600 text-4xl font-bold">Football Fixture Generator</h1>
+
+        <div class="mt-8">
+            <label for="team-names" class="block mb-2">Enter Team Names (comma-separated):</label>
+            <input type="text" id="team-names" class="p-2 border rounded" placeholder="Team A, Team B, Team C" required />
+        </div>
+
+        <div class="mt-8">
+            <label for="tournament-duration" class="block mb-2">Tournament Duration:</label>
+            <input type="text" id="tournament-duration" class="p-2 border rounded" placeholder="e.g. 3 Days" required />
+        </div>
+
+        <div class="mt-8">
+            <label for="fixture-date" class="block mb-2">Start Date:</label>
+            <input type="date" id="fixture-date" class="p-2 border rounded" required />
+        </div>
+
+        <button id="generate-fixture" class="p-2 bg-green-500 text-white rounded mt-4">Generate Fixture</button>
+        <div id="fixture-output" class="mt-4"></div>
+    </div>
+
+    <div id="footer"></div>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Venue - VenueVista</title>
+    <link rel="stylesheet" href="/VenueVista/public/global.css"> <!-- Correct path -->
+    <link rel="stylesheet" href="/VenueVista/src/css/styles.css">
+    <link rel="stylesheet" href="https://cdn.tailwindcss.com">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <!-- Include Navbar -->
+    <div id="navbar-container"></div>
+
+    <main class="p-6">
+        <h1 class="text-2xl font-bold">Find a Venue</h1>
+        <p>Search for your ideal venue here!</p>
+    </main>
+
+    <!-- Include Footer -->
+    <div id="footer-container"></div>
+
+    <script>
+        // Load Navbar
+        fetch('/VenueVista/public/navbar.html') // Use absolute path to navbar.html
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('navbar-container').innerHTML = data;
+                initializeNavbar(); // Initialize navbar functionality
+            });
+
+        // Load Footer
+        fetch('/VenueVista/public/footer.html') // Use absolute path to footer.html
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-container').innerHTML = data;
+            });
+
+        function initializeNavbar() {
+            const menuToggle = document.getElementById('menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            menuToggle.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+    </script>
+</body>
+</html>

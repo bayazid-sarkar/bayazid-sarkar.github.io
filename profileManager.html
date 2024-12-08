@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manager Dashboard</title>
+    <link rel="stylesheet" href="/VenueVista/src/css/styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 flex flex-col min-h-screen">
+
+  <!-- Navbar -->
+  <div id="navbar"></div>
+
+  <!-- Dashboard Content -->
+  <div class="flex-grow container mx-auto p-8">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+      <!-- Profile Section -->
+      <div class="bg-white p-6 rounded shadow-md">
+        <div class="text-center">
+          <img id="profilePic" src="/VenueVista/public/assets/default-profile.jpg" alt="Profile Picture" class="w-32 h-32 mx-auto rounded-full">
+          <h3 id="managerName" class="text-lg font-semibold mt-4">John Manager</h3>
+          <p id="managerRole" class="text-gray-600">Manager</p>
+          <input type="file" id="fileInput" class="hidden">
+          <button id="uploadPic" class="mt-4 bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 transition duration-300">Upload/Change</button>
+        </div>
+      </div>
+
+      <!-- Requested Slots -->
+      <div class="md:col-span-2 bg-white p-6 rounded shadow-md">
+        <button class="w-full bg-blue-500 text-white py-2 rounded" onclick="toggleSection('requestedSlots')">Requested Slots</button>
+        <div id="requestedSlots" class="hidden mt-4">
+          <h2 class="text-xl font-bold mb-4">Requested Slots</h2>
+          <table>
+            <thead>
+              <tr class="border-b">
+                <th>User</th>
+                <th>Contact</th>
+                <th>Slot</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="slotRequests"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Payments -->
+    <div class="bg-white p-6 rounded shadow-md mt-8">
+      <button class="w-full bg-blue-500 text-white py-2 rounded" onclick="toggleSection('recentPayments')">Recent Payments</button>
+      <div id="recentPayments" class="hidden mt-4">
+        <h2 class="text-xl font-bold mb-4">Recent Payments</h2>
+        <table>
+          <thead>
+            <tr class="border-b">
+              <th>Date</th>
+              <th>Item</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody id="paymentHistory"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Upload Venue -->
+    <div class="bg-white p-6 rounded shadow-md mt-8">
+      <button class="w-full bg-blue-500 text-white py-2 rounded" onclick="toggleSection('uploadVenue')">Upload Venue</button>
+      <div id="uploadVenue" class="hidden mt-4">
+        <h2 class="text-xl font-bold mb-4">Upload Venue</h2>
+        <form id="uploadVenueForm">
+          <input type="text" id="venueName" class="w-full px-4 py-2 border rounded mb-4" placeholder="Venue Name">
+          <textarea id="venueDetails" class="w-full px-4 py-2 border rounded mb-4" placeholder="Venue Details"></textarea>
+          <button type="submit" class="w-full bg-green-500 text-white py-2 rounded hover:bg-green-600 transition duration-300">Upload</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- All Venues -->
+    <div class="bg-white p-6 rounded shadow-md mt-8">
+      <button class="w-full bg-blue-500 text-white py-2 rounded" onclick="toggleSection('allVenues')">All Venues</button>
+      <div id="allVenues" class="hidden mt-4">
+        <h2 class="text-xl font-bold mb-4">All Venues</h2>
+        <table>
+          <thead>
+            <tr class="border-b">
+              <th>Venue</th>
+              <th>Details</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="venueList"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div id="footer"></div>
+
+  <script>
+    // Fetch Navbar and Footer
+    fetch('/VenueVista/public/navbar.html')
+      .then(response => response.text())
+      .then(data => document.getElementById('navbar').innerHTML = data);
+
+    fetch('/VenueVista/public/footer.html')
+      .then(response => response.text())
+      .then(data => document.getElementById('footer').innerHTML = data);
+
+    // Slot Requests Data
+    const slotRequests = [
+      { user: "Alice", contact: "123-456-7890", slot: "2024-11-20, 10 AM" },
+      { user: "Bob", contact: "987-654-3210", slot: "2024-11-22, 2 PM" }
+    ];
+
+    // Populate Slot Requests
+    const slotRequestsTable = document.getElementById("slotRequests");
+    slotRequests.forEach(({ user, contact, slot }) => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td class="p-2">${user}</td>
+        <td class="p-2">${contact}</td>
+        <td class="p-2">${slot}</td>
+        <td class="p-2">
+          <button class="bg-green-500 text-white py-1 px-2 rounded hover:bg-green-600 transition">Accept</button>
+          <button class="bg-red-500 text-white py-1 px-2 rounded hover:bg-red-600 transition">Reject</button>
+        </td>
+      `;
+      slotRequestsTable.appendChild(row);
+    });
+
+    // Recent Payments Data
+    const payments = [
+      { date: "2024-11-01", item: "Venue Booking", amount: "$500" },
+      { date: "2024-10-20", item: "Merchandise", amount: "$100" }
+    ];
+
+    // Populate Recent Payments
+    const paymentHistory = document.getElementById("paymentHistory");
+    payments.forEach(({ date, item, amount }) => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td class="p-2">${date}</td>
+        <td class="p-2">${item}</td>
+        <td class="p-2 text-green-500">${amount}</td>
+      `;
+      paymentHistory.appendChild(row);
+    });
+
+    // All Venues Data
+    const venues = [
+      { name: "Cricket Ground", details: "Large outdoor cricket ground" },
+      { name: "Football Stadium", details: "Well-maintained football stadium" }
+    ];
+
+    // Populate All Venues
+    const venueList = document.getElementById("venueList");
+    venues.forEach(({ name, details }) => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td class="p-2">${name}</td>
+        <td class="p-2">${details}</td>
+        <td class="p-2">
+          <button class="bg-yellow-500 text-white py-1 px-2 rounded hover:bg-yellow-600 transition">Modify</button>
+        </td>
+      `;
+      venueList.appendChild(row);
+    });
+
+    // Toggle visibility of sections
+    function toggleSection(id) {
+      const section = document.getElementById(id);
+      section.classList.toggle('hidden');
+    }
+
+    // Profile Picture Upload
+    const fileInput = document.getElementById("fileInput");
+    const uploadPic = document.getElementById("uploadPic");
+    const profilePic = document.getElementById("profilePic");
+
+    uploadPic.addEventListener("click", () => fileInput.click());
+
+    fileInput.addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = () => profilePic.src = reader.result;
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // Handle Venue Upload Form
+    document.getElementById("uploadVenueForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      alert("Venue uploaded successfully!");
+    });
+  </script>
+</body>
+</html>

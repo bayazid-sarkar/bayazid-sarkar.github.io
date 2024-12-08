@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <nav class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto flex items-center justify-between">
+            <!-- Logo Section -->
+            <a href="/index.html" class="text-2xl font-bold">
+                <!-- Corrected image path -->
+                <img src="venuevistaLogo000.png" alt="VenueVista Logo" class="logo" width="200px" height="auto">
+            </a>
+    
+            <!-- Mobile Menu Toggle Button -->
+            <button id="menu-toggle" class="md:hidden focus:outline-none">
+                <svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/>
+                </svg>
+            </button>
+    
+            <!-- Navbar Links (Desktop) -->
+            <ul class="hidden md:flex space-x-6" id="navbar-links">
+                <li><a href="index.html" class="hover:text-green-400">Home</a></li>
+                <li><a href="#searchSection" class="hover:text-green-400">Find Venue</a></li>
+            </ul>
+    
+            <!-- Login/Registration Buttons (Desktop) -->
+            <div class="hidden md:flex space-x-4">
+                <a href="/login/index.html" class="px-4 py-2 bg-green-500 text-white rounded hover:ring-2 ring-green-300">Login</a>
+                <a href="/login/index.html#" class="px-4 py-2 bg-blue-500 text-white rounded hover:ring-2 ring-blue-300">Register</a>
+            </div>
+        </div>
+    
+        <!-- Mobile Menu (Hidden on Desktop) -->
+        <ul id="mobile-menu" class="hidden flex-col mt-4 space-y-2 md:hidden">
+            <li><a href="index.html" class="block hover:text-green-400">Home</a></li>
+            <li><a href="findVenue.html" class="block hover:text-green-400">Find Venue</a></li>
+            <li><a href="fixture.html" class="block hover:text-green-400">Fixture</a></li>
+            <li><a href="merchandise.html" class="block hover:text-green-400">Merchandise</a></li>
+            <li><a href="login.html" class="block px-4 py-2 bg-green-500 text-white rounded hover:ring-2 ring-green-300">Login</a></li>
+            <li><a href="registration.html" class="block px-4 py-2 bg-blue-500 text-white rounded hover:ring-2 ring-blue-300">Register</a></li>
+        </ul>
+    </nav>
+</body>
+</html>

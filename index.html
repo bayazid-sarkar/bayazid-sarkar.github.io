@@ -1,18 +1,97 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
+<!-- index.html -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Md. Bayazid Sarkar Bijoy</title>
+    <title>VenueVista</title>
+    <script type="module" src="navbar.js" async></script>
+    <script type="module" src="login.js" async></script>
+    <script type="module" src="footer.js" async></script>
+    <script src="linknavbar.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="index.css">
+    
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    
+    <style>
+        h1 {
+            font-size: 50px; /* Increase the font size */
+            color:#1b5e20; /* Main theme color */
+            font-weight: bold;
+            margin-bottom: 4px;
+            margin-top: 10px;
+        }
+
+        h3 {
+            font-size: 36px; /* Increase the font size */
+            color: #ff5722;  /* Secondary theme color */
+            font-weight: normal;
+            margin-bottom: 20px;
+        }
+    </style>
+    
 </head>
 <body>
-    <h1 text align ="middle">Hi There!</h1>
-    <h2 text align ="middle"> This is <b></b>Md. Bayazid Sarkar Bijoy</b></h2>
-    <h3 text align ="middle">Department of Computer Science & Engineering</h3>
-    <h3 text align ="middle">Jagannath University, Dhaka - 1100</h3>
-    <br>
-    <footer>
-        <p text align ="middle" marquee ="left">Thanks for visiting the website. This site is currently under construction.</p>
-    </footer>
+    <div id="navbar"></div>
+
+    <h1>VenueVista</h1>
+    <h3 style="color: #ff5722;">Your Sports Maintenance Solution</h3>
+
+    <div class="home-section">
+        <div class="background_overlay"></div>
+        <div class="background_img">
+            <img src="Dhupkhula_arielview.jpg" alt="Home Image" class="home-image" />
+        </div>
+    </div>
+
+    <section class="facilities-section">
+        <div class="facilities-container">
+            <div class="facility-card">
+                <h3>Easy Venue Booking</h3>
+                <p>Book your venue easily through our platform.</p>
+            </div>
+            <div class="facility-card">
+                <h3>Multiple Locations</h3>
+                <p>We offer a variety of locations for your events.</p>
+            </div>
+            <div class="facility-card">
+                <h3>Real-time Availability</h3>
+                <p>Check the venue availability instantly.</p>
+            </div>
+            <div class="facility-card">
+                <h3>Affordable Prices</h3>
+                <p>Book at competitive prices, making your events affordable.</p>
+            </div>
+            <div class="facility-card">
+                <h3>Seamless Booking</h3>
+                <p>Enjoy a smooth and hassle-free booking experience.</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="search-section" id="searchSection">
+      <input type="text" placeholder="Search for venues..." class="search-bar" id="searchInput"/>
+      <button class="search-button text-white p-2 rounded-md" id="searchButton">Search</button>
+      <select class="location-select text-white p-2 rounded-md" id="locationSelect">
+          <option value="">Location</option>
+          <option value="uttara">Uttara</option>
+          <option value="wari">Wari</option>
+          <option value="farmgate">Farmgate</option>
+          <option value="jatrabari">Jatrabari</option>
+          <option value="mirpur">Mirpur</option>
+      </select>
+  </div>
+  
+
+    <section class="venue-cards">
+        <h2 class="arrow-button2">Available Venues</h2>
+        <button class="arrow-button prev-button" id="prevButton">←</button>
+        <div class="card-container" id="cardContainer"></div>
+        <button class="arrow-button next-button" id="nextButton">→</button>
+    </section>
+
+    <div id="footer"></div>
+    <script src="index.js"></script>
 </body>
 </html>

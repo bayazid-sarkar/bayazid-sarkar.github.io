@@ -5,15 +5,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book Venue</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="firebaseConfig.js"></script>
-    <link rel="stylesheet" href="styles.css">
+    <script type="module" src="firebaseConfig.js"></script>
     <script type="module" src="navbar.js" async></script>
     <script type="module" src="booking.js" async></script>
-    <script src="linknavbar.js"></script>
+    <script type="module" src="linknavbar.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-functions.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js"></script>
+
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="booking.css">
-    <script src="booking.js"></script>
-    
+    <style>
+        /* Popup Styling */
+        .popup {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .popup-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+        }
+        .hidden {
+            display: none;
+        }
+        .button-group button {
+            margin: 5px;
+        }
+    </style>
 </head>
 <body>
     <div id="navbar"></div>
@@ -43,6 +76,47 @@
     </div>
 
     <button id="continueButton" disabled>Continue to Payment</button>
+
+    <!-- Payment Popup -->
+    <div id="paymentPopup" class="popup">
+        <div class="popup-content">
+            <h2>Payment Confirmation</h2>
+            <p>Verify your email to proceed with payment.</p>
+
+            <!-- Email OTP Verification -->
+            <div id="otpSection">
+                <label for="email">Email:</label>
+                <input type="email" id="email" placeholder="Enter your email" required>
+                <button id="sendOtpButton">Send OTP</button>
+                <div id="otpInputContainer" class="hidden">
+                  <label for="otp">Enter OTP:</label>
+                  <input type="text" id="otp" placeholder="Enter OTP">
+                  <button id="verifyOtpButton">Verify</button>
+                </div>
+              </div>
+
+            <!-- Payment Options -->
+            <div id="paymentOptions" class="hidden">
+                <p>Choose your payment method:</p>
+                <button class="payment-method" id="bkashButton">bKash</button>
+                <button class="payment-method" id="nagadButton">Nagad</button>
+            </div>
+
+            <!-- Mobile and Email Form -->
+            <div id="paymentForm" class="hidden">
+                <label for="mobileNumber">Mobile Number:</label>
+                <input type="tel" id="mobileNumber" placeholder="Enter your mobile number" required>
+                <label for="confirmEmail">Email:</label>
+                <input type="email" id="confirmEmail" placeholder="Enter your email" required>
+                <div class="button-group">
+                    <button id="confirmPaymentButton" class="confirm-button">Confirm Payment</button>
+                    <button id="cancelPaymentButton" class="cancel-button">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
     <div id="footer"></div>
 </body>
 </html>
